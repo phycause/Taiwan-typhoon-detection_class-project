@@ -51,7 +51,7 @@ FEATURE = args.feature
 
 CLASSIFIER = args.classifier
 # CLASSIFIER = 'support_vector_machine'
-
+#python proj3.py --feature=tiny_image --classifier=support_vector_machine
 #number of training examples per category to use. Max is 100. For
 #simplicity, we assume this is the number of test cases per category, as
 #well.
@@ -77,8 +77,18 @@ def main():
 
     if FEATURE == 'tiny_image':
         # YOU CODE get_tiny_images.py
-        train_image_feats = get_tiny_images(train_image_paths)
-        test_image_feats = get_tiny_images(test_image_paths)
+        if os.path.isfile('tiny_train.pkl') is False:
+            train_image_feats = get_tiny_images(train_image_paths)
+            with open('tiny_train.pkl', 'wb') as handle:
+                    pickle.dump(train_image_feats, handle, protocol=pickle.HIGHEST_PROTOCOL)
+            test_image_feats = get_tiny_images(test_image_paths)
+            with open('tiny_test.pkl', 'wb') as handle:
+                    pickle.dump(test_image_feats, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        else:
+            with open('tiny_train.pkl', 'rb') as handle:
+                train_image_feats = pickle.load(handle)
+            with open('tiny_test.pkl', 'rb') as handle:
+                test_image_feats = pickle.load(handle)
 
     elif FEATURE == 'bag_of_sift':
         # YOU CODE build_vocabulary.py
