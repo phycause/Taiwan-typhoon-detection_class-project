@@ -38,7 +38,7 @@ def svm_classify(train_image_feats, train_labels, test_image_feats):
     '''
     #目前最好0.05
     #使用切割法目前最好0.001
-    mdl = LinearSVC(C= 0.000003)
+    mdl = LinearSVC(C= 0.000008)
     mdl.fit(train_image_feats, train_labels)
     pred_label = mdl.predict(test_image_feats)   
     #############################################################################
